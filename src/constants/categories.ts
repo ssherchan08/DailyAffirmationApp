@@ -1,12 +1,22 @@
-type CategoryKey = 'motivation' | 'selfLove' | 'positivity';
+export type CategoryKey = 'motivation' | 'selfLove' | 'positivity';
 
-const categories: Record<CategoryKey, string[]> = {
+export const categories: Record<CategoryKey, string[]> = {
   motivation: [
     'You are capable of amazing things!',
     'Believe in yourself and all that you are.',
     'Your only limit is you.',
     'Push yourself, because no one else is going to do it for you.',
     'Great things never come from comfort zones.',
+    'The harder you work for something, the greater you’ll feel when you achieve it.',
+    'Don’t stop when you’re tired. Stop when you’re done.',
+    'It always seems impossible until it’s done.',
+    'The future belongs to those who believe in the beauty of their dreams.',
+    'Success is the sum of small efforts, repeated day in and day out.',
+    'Believe you can and you’re halfway there.',
+    'The secret of getting ahead is getting started.',
+    'Motivation is what gets you started. Habit is what keeps you going.',
+    'Do something today that your future self will thank you for.',
+    'Success doesn’t just find you. You have to go out and get it.',
   ],
   selfLove: [
     'You are enough just as you are.',
@@ -14,6 +24,16 @@ const categories: Record<CategoryKey, string[]> = {
     'You are worthy of love and happiness.',
     'You deserve to be treated with respect.',
     'Self-love is not selfish; it is essential.',
+    'You are your best thing.',
+    'Don’t wait for someone to bring you flowers. Plant your own garden and decorate your own soul.',
+    'You are not what happened to you. You are what you choose to become.',
+    'Self-care is how you take your power back.',
+    'You are a work in progress and that’s okay.',
+    'You are allowed to be both a masterpiece and a work in progress, simultaneously.',
+    'Take care of yourself; you’re the only one who’s with you your entire life.',
+    'When you love yourself, you give others permission to do the same.',
+    'You are deserving of all the love, joy, and peace that this life has to offer.',
+    'To love oneself is the beginning of a lifelong romance.',
   ],
   positivity: [
     'Stay positive, work hard, and make it happen.',
@@ -21,7 +41,15 @@ const categories: Record<CategoryKey, string[]> = {
     'Choose to be optimistic; it feels better.',
     'Keep your face always toward the sunshine—and shadows will fall behind you.',
     'The only limit to our realization of tomorrow will be our doubts of today.',
+    'A positive attitude can really make dreams come true—it did for me.',
+    'The best way to predict the future is to create it.',
+    'Once you replace negative thoughts with positive ones, you’ll start having positive results.',
+    'Believe you can and you’re halfway there.',
+    'Positivity always wins… Always.',
+    'Don’t wait for the storm to pass. Learn to dance in the rain.',
+    'Success is not the key to happiness. Happiness is the key to success.',
+    'The sun will rise and we will try again.',
+    'A positive mindset brings positive things.',
+    'Stay positive, stay fighting, stay brave, stay ambitious, stay focused, stay strong.',
   ],
 };
-
-export default categories;
