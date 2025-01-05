@@ -1,34 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, AppState, AppStateStatus } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { categories, CategoryKey } from '../constants/categories'; // Import your categories from the constant file
+import { useFocusEffect } from '@react-navigation/native';
+import { categories, CategoryKey } from '../constants/categories';
 
 const DailyAffirmationDisplay: React.FC = () => {
   const [randomAffirmation, setRandomAffirmation] = useState<string>('');
+  const [appState, setAppState] = useState<AppStateStatus>(AppState.currentState);
 
-  useEffect(() => {
-    // Check if the affirmation for today is stored in AsyncStorage
-    const checkAndSetAffirmation = async () => {
-      const today = new Date().toDateString(); // Get today's date
-      const storedDate = await AsyncStorage.getItem('storedDate');
-      const storedAffirmation = await AsyncStorage.getItem('storedAffirmation');
+  const checkAndSetAffirmation = async () => {
+    const today = new Date().toDateString(); // Get today's date
+    const storedDate = await AsyncStorage.getItem('storedDate');
+    const storedAffirmation = await AsyncStorage.getItem('storedAffirmation');
 
-      // If today's affirmation is already stored, use it; otherwise, generate a new one
-      if (storedDate === today && storedAffirmation) {
-        setRandomAffirmation(storedAffirmation);
-      } else {
-        const randomCategoryKey: CategoryKey = getRandomCategoryKey();
-        const affirmation = getRandomAffirmation(randomCategoryKey);
-        setRandomAffirmation(affirmation);
+    // If today's affirmation is already stored, use it; otherwise, generate a new one
+    if (storedDate === today && storedAffirmation) {
+      setRandomAffirmation(storedAffirmation);
+    } else {
+      const randomCategoryKey: CategoryKey = getRandomCategoryKey();
+      const affirmation = getRandomAffirmation(randomCategoryKey);
+      setRandomAffirmation(affirmation);
 
-        // Store today's date and the generated affirmation
-        await AsyncStorage.setItem('storedDate', today);
-        await AsyncStorage.setItem('storedAffirmation', affirmation);
-      }
-    };
-
-    checkAndSetAffirmation();
-  }, []);
+      // Store today's date and the generated affirmation
+      await AsyncStorage.setItem('storedDate', today);
+      await AsyncStorage.setItem('storedAffirmation', affirmation);
+    }
+  };
 
   // Function to get a random category
   const getRandomCategoryKey = (): CategoryKey => {
@@ -54,6 +51,30 @@ const DailyAffirmationDisplay: React.FC = () => {
     await AsyncStorage.setItem('storedDate', today);
     await AsyncStorage.setItem('storedAffirmation', affirmation);
   };
+
+  // Use `useFocusEffect` to check affirmation when the screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      checkAndSetAffirmation();
+    }, [])
+  );
+
+  // Use `AppState` to handle app foreground state
+  useEffect(() => {
+    const handleAppStateChange = (nextAppState: AppStateStatus) => {
+      if (appState.match(/inactive|background/) && nextAppState === 'active') {
+        // Check and set affirmation when app comes to the foreground
+        checkAndSetAffirmation();
+      }
+      setAppState(nextAppState);
+    };
+
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
+
+    return () => {
+      subscription.remove();
+    };
+  }, [appState]);
 
   return (
     <View style={styles.container}>
