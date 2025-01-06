@@ -117,3 +117,8 @@ dependencies {
         implementation jscFlavor
     }
 }
+
+project.ext.react = [
+    enableHermes: true, // Optional: Enable Hermes if your project uses it
+    bundleInDebug: true // Ensures the JS bundle is included in the debug APK
+]
