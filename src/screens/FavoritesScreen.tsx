@@ -4,10 +4,8 @@ import { useSelector } from 'react-redux';
 import TitleBar from '../components/TitleBar';
 
 const FavoritesScreen: React.FC = () => {
-  // Access favorites from the Redux store
-  const favorites = useSelector((state: any) => state.favorites); // Adjust according to your store structure
+  const favorites = useSelector((state: any) => state.favorites);
 
-  // Check if there are any favorites
   const favoriteItems = favorites.map((fav: { affirmation: string }) => fav.affirmation);
 
   return (
@@ -43,11 +41,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#E0D3F3',
   },
   container: {
-    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#E0D3F3',
-    // padding: 16,
   },
   image: {
     width: 200,
@@ -70,23 +66,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#3A3A3A',
     width: '90%',
-    // textAlign: 'center',
-    // marginBottom: 10,
   },
   affirmationContainer: {
     backgroundColor:'#f2f0ef',
     marginBottom: 10,
-    flexDirection: 'row', // Aligns text and heart icon horizontally
-    alignItems: 'center', // Vertically centers both text and heart
-    justifyContent: 'space-between', // Pushes the text to the left and heart icon to the right
-    width: '95%', // Ensures the row takes full width of the screen
-    paddingHorizontal: 20, // Adds horizontal padding to the container
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '95%',
+    paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
   },
   favoriteButton: {
-    // textAlign: 'right',
-    marginLeft: 10, // Space between text and heart icon
+    marginLeft: 10,
   },
   favoriteIcon: {
     width: 30,
@@ -94,12 +87,9 @@ const styles = StyleSheet.create({
   },
   emptyContainer: {
     flex: 1,
-    justifyContent: 'center', // Centers content vertically
-    alignItems: 'center', // Centers content horizontally
+    justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'column',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // flexDirection: 'column',
   },
   empty: {
     fontSize: 18,

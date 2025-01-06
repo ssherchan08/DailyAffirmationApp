@@ -10,13 +10,10 @@ const CategoryDetailScreen: React.FC = () => {
   const route = useRoute();
   const { category, name } = route.params as { category: CategoryKey, name: string };
   const affirmations = categories[category];
-  
   const dispatch = useDispatch();
 
-  // Access favorites from Redux store
-  const favorites = useSelector((state: any) => state.favorites); 
+  const favorites = useSelector((state: any) => state.favorites);
 
-  // Initialize the favoriteState based on the Redux store
   const [favoriteState, setFavoriteState] = useState(() => {
     return affirmations.reduce((acc, affirmation) => {
       acc[affirmation] = favorites.some((fav: { affirmation: string }) => fav.affirmation === affirmation);
@@ -25,7 +22,6 @@ const CategoryDetailScreen: React.FC = () => {
   });
 
   useEffect(() => {
-    // Update the local state whenever favorites change in the Redux store
     setFavoriteState((prevState) => {
       const updatedState = { ...prevState };
       affirmations.forEach((affirmation) => {
@@ -38,18 +34,14 @@ const CategoryDetailScreen: React.FC = () => {
   const handleToggleFavorite = (affirmation: string) => {
     const isCurrentlyFavorite = favoriteState[affirmation];
     if (isCurrentlyFavorite) {
-      // Dispatch remove favorite action
       dispatch(removeFavorite(affirmation));
     } else {
-      // Check if the affirmation is already in favorites
       const alreadyFavorited = favorites.some((fav: { affirmation: string }) => fav.affirmation === affirmation);
       if (!alreadyFavorited) {
-        // Dispatch add favorite action only if it's not already a favorite
         dispatch(addFavorite(category, affirmation));
       }
     }
 
-    // Toggle the favorite state for the specific affirmation
     setFavoriteState((prevState) => ({
       ...prevState,
       [affirmation]: !prevState[affirmation],
@@ -71,8 +63,7 @@ const CategoryDetailScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-           <TitleBar title={name + ' Affirmations'}/>
-      {/* <Text style={styles.title}>{name} Affirmations</Text> */}
+      <TitleBar title={name + ' Affirmations'}/>
       <Image source={getCategoryImage(category)} style={styles.image} />
       <ScrollView contentContainerStyle={styles.contentContainer}>
         {affirmations.map((affirmation, index) => (
@@ -84,8 +75,8 @@ const CategoryDetailScreen: React.FC = () => {
               <Image
                 source={
                   favoriteState[affirmation]
-                    ? require('../assets/images/heart-filled.png') // Filled heart
-                    : require('../assets/images/heart-empty.png') // Empty heart
+                    ? require('../assets/images/heart-filled.png')
+                    : require('../assets/images/heart-empty.png')
                 }
                 style={styles.favoriteIcon}
               />
@@ -103,7 +94,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#E0D3F3',
-    // padding: 16,
   },
   image: {
     width: 200,
@@ -125,23 +115,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#3A3A3A',
     width: '90%',
-    // textAlign: 'center',
-    // marginBottom: 10,
   },
   affirmationContainer: {
     backgroundColor:'#f2f0ef',
     marginBottom: 20,
-    flexDirection: 'row', // Aligns text and heart icon horizontally
-    alignItems: 'center', // Vertically centers both text and heart
-    justifyContent: 'space-between', // Pushes the text to the left and heart icon to the right
-    width: '95%', // Ensures the row takes full width of the screen
-    paddingHorizontal: 20, // Adds horizontal padding to the container
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '95%',
+    paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
   },
   favoriteButton: {
-    // textAlign: 'right',
-    marginLeft: 10, // Space between text and heart icon
+    marginLeft: 10,
   },
   favoriteIcon: {
     width: 30,

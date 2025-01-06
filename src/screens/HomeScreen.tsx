@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { categories, CategoryKey } from '../constants/categories'; // Assuming categories are stored here
+import { categories, CategoryKey } from '../constants/categories';
 import DailyAffirmationDisplay from '../components/DailyAffirmationDisplay';
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
-  const [showCategories, setShowCategories] = useState(false); // State to toggle categories visibility
+  const [showCategories, setShowCategories] = useState(false);
 
   const handleCategoryPress = (category: CategoryKey) => {
-    // Navigate to Category Detail screen with the selected category
     navigation.navigate('CategoryDetail', { category, name: getCategoryName(category) });
   };
 
@@ -50,23 +49,22 @@ const HomeScreen: React.FC = () => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => setShowCategories(!showCategories)} // Toggle category visibility
+          onPress={() => setShowCategories(!showCategories)}
         >
           <Text style={styles.buttonText}>Explore Categories</Text>
           <Image
             source={
               showCategories
-                ? require('../assets/images/arrow-up.png') // Up icon when categories are open
-                : require('../assets/images/arrow-down.png') // Down icon when categories are closed
+                ? require('../assets/images/arrow-up.png')
+                : require('../assets/images/arrow-down.png')
             }
             style={styles.icon}
           />
         </TouchableOpacity>
 
-        {/* Display categories when the state is true */}
         {showCategories && (
           <FlatList
-            data={Object.keys(categories)} // Categories keys
+            data={Object.keys(categories)}
             keyExtractor={(item) => item}
             renderItem={({ item }) => (
               <TouchableOpacity
@@ -108,7 +106,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     marginBottom: 20,
-    color: '#4D3F72', // Darker pastel purple for the title
+    color: '#4D3F72',
     textAlign: 'center',
     fontWeight: 'bold',
   },
@@ -117,12 +115,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {
-    backgroundColor: '#D3C4F2', // Light pastel purple for the button background
+    backgroundColor: '#D3C4F2',
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 8,
     marginTop: 8,
-    // marginBottom: 0,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -149,14 +146,12 @@ const styles = StyleSheet.create({
   },
   categoryButton: {
     width: '100%',
-    backgroundColor: '#F0E4F1', // Light lavender for category buttons
+    backgroundColor: '#F0E4F1',
     paddingVertical: 15,
     borderRadius: 8,
     marginVertical: 3,
     alignItems: 'center',
-    // borderWidth: 1,
-    borderColor: '#D3C4F2', // Soft border color
-    // elevation: 3, // Slight shadow for elevation effect
+    borderColor: '#D3C4F2',
   },
   categoryText: {
     color: '#4D3F72',
